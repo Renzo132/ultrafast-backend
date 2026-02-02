@@ -2,20 +2,14 @@
   "name": "ultrafast-backend",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "ts-node src/server.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node dist/server.js"
   },
-  "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.2.0",
-    "ts-node": "^10.9.2"
-  },
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "typescript": "^5.9.3"
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "typescript": "^5.4.5"
   }
 }
