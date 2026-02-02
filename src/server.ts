@@ -1,25 +1,24 @@
-import express from "express";
-import cors from "cors";
+import { Hono } from "hono";
+import { serve } from "@hono/node-server";
+import { trpcServer } from "@hono/trpc-server";
+import { appRouter } from "./router.js";
 
-const app = express();
+const app = new Hono();
 
-// middleware
-app.use(cors());
-app.use(express.json());
+app.get("/", (c) => c.text("Ultrafast Backend Running"));
 
-// health check (Railway test)
-app.get("/health", (_req, res) => {
-  res.json({ status: "ok" });
+app.use(
+  "/api/trpc/*",
+  trpcServer({
+    router: appRouter
+  })
+);
+
+const port = Number(process.env.PORT) || 3000;
+
+serve({
+  fetch: app.fetch,
+  port
 });
 
-// root check
-app.get("/", (_req, res) => {
-  res.send("Ultrafast Backend Running 🚀");
-});
-
-// IMPORTANT: Railway port
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+console.log(`🚀 Server running on port ${port}`);
